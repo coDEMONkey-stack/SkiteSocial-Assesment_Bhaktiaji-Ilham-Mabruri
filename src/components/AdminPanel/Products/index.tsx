@@ -106,10 +106,12 @@ const AddProduct: React.FC = () => {
             const fileInput = document.getElementById("imageUpload") as HTMLInputElement;
             const file = fileInput?.files?.[0];
     
-            let imageUrl: string | null = "";
+            let imageUrl: string = "";
             if (file) {
-                imageUrl = await uploadImage(file);
-                if (!imageUrl) {
+                const uploadResult = await uploadImage(file);
+                if (uploadResult) {
+                    imageUrl = uploadResult;
+                } else {
                     setErrors((prev) => ({ ...prev, image: "Image upload failed" }));
                     return;
                 }

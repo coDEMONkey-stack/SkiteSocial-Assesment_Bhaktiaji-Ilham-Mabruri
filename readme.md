@@ -20,7 +20,7 @@ II. Getting Started:
 - For updates or additions to the Admin Panel frontend, go to the /src/app/ dashboard folder.
 
 III. Deployment:
-- The deployment link to Vercel:
+- The deployment link to Vercel: https://skite-social-assesment-bhaktiaji-ilham-mabruri-81nri37t7.vercel.app/
 
 IV. Others:
 - Sliced from Figma design references: https://www.figma.com/file/GF3khMtrgYsrxRjLVwuoWA/FE-test?type=design&node-id=0%3A1&mode=design&t=Zgq5WCFRRmKldnvv-1 
