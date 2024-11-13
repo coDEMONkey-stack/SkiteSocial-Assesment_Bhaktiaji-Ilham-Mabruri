@@ -165,9 +165,9 @@ const AddProduct: React.FC = () => {
     return (
         <div className="bg-blue-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-[#303030] sm:mb-15 mb-10">Add New Product</h2>
-            <div className="relative">
+            <div className="fixed right-0 bottom-5 z-999">
                 {showToast && (
-                    <div className="fixed top-4 sm:bottom-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg z-50">
+                    <div className="top-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg">
                         Product created successfully!
                     </div>
                 )}
