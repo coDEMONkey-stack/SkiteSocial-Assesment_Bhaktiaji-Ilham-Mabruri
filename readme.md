@@ -15,7 +15,7 @@ II. Getting Started:
 - First, run the development server: npm run dev
 - Open http://localhost:3000 in your browser to view the application.
 - To make changes for the End-User, navigate to the /src/components folder.
-- To make changes for the Admin, navigate to the /src/components folder.
+- To make changes for the Admin, navigate to the /src/components/AdminPanel folder.
 - For updates or additions to the User frontend, go to the /src/app folder.
 - For updates or additions to the Admin Panel frontend, go to the /src/app/ dashboard folder.
 
