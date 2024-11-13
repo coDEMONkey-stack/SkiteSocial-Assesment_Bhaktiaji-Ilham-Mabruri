@@ -3,34 +3,34 @@ import React, { useState } from 'react';
 
 const AddProduct: React.FC = () => {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [category, setCategory] = useState<string>('wash_and_fold');
+    const [category, setCategory] = useState<string>("wash_and_fold");
     const [formData, setFormData] = useState({
-        productName: '',
-        description: '',
-        sku: '',
-        stock: '',
-        price: '',
+        productName: "",
+        description: "",
+        sku: "",
+        stock: "",
+        price: "",
     });
     const [errors, setErrors] = useState({
-        productName: '',
-        description: '',
-        sku: '',
-        stock: '',
-        price: '',
-        image: '',
+        productName: "",
+        description: "",
+        sku: "",
+        stock: "",
+        price: "",
+        image: "",
     });
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
-        if (file && file.type.startsWith('image/')) {
+        if (file && file.type.startsWith("image/")) {
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
-            setErrors((prev) => ({ ...prev, image: '' }));
+            setErrors((prev) => ({ ...prev, image: "" }));
         } else {
-            setErrors((prev) => ({ ...prev, image: 'This field is required' }));
+            setErrors((prev) => ({ ...prev, image: "This field is required" }));
         }
     };
 
@@ -38,30 +38,101 @@ const AddProduct: React.FC = () => {
         setCategory(category);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const uploadImage = async (file: File): Promise<string | null> => {
+        try {
+            const formData = new FormData();
+            formData.append("image", file);
+            const response = await fetch("https://belaundry-api.sebaris.link/platform/upload-image", {
+                method: "POST",
+                headers: {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoxLCJpYXQiOjE2OTAzNTc4Mzd9.ILF698ktm1Zw_ssLXsmCAMAGEz3_LIVA3_XWXcHWK0k",
+                },
+                body: formData,
+            });
+            if (response.ok) {
+                const data = await response.json();
+                return data.imageUrl;
+            } else {
+                console.error("Image upload failed");
+                return null;
+            }
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            return null;
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         let isValid = true;
         let newErrors = { ...errors };
 
         Object.keys(formData).forEach((key) => {
             if (!formData[key as keyof typeof formData]) {
-                newErrors[key as keyof typeof errors] = 'This field is required';
+                newErrors[key as keyof typeof errors] = "This field is required";
                 isValid = false;
             }
         });
 
-        if (!imagePreview) {
-            newErrors.image = 'This field is required';
-            isValid = false;
-        }
-
         setErrors(newErrors);
+        if (!isValid || !imagePreview) return;
 
-        if (isValid) {
-            console.log('Form Submitted', formData, category);
+        try {
+            const fileInput = document.getElementById("imageUpload") as HTMLInputElement;
+            const file = fileInput?.files?.[0];
+
+            let imageUrl = "";
+            if (file) {
+                imageUrl = await uploadImage(file);
+                if (!imageUrl) {
+                    setErrors((prev) => ({ ...prev, image: "Image upload failed" }));
+                    return;
+                }
+            }
+
+            const response = await fetch("https://belaundry-api.sebaris.link/platform/product", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoxLCJpYXQiOjE2OTAzNTc4Mzd9.ILF698ktm1Zw_ssLXsmCAMAGEz3_LIVA3_XWXcHWK0k",
+                },
+                body: JSON.stringify({
+                    name: formData.productName,
+                    description: formData.description,
+                    sku: formData.sku,
+                    stock: parseInt(formData.stock),
+                    category_id: category,
+                    price: parseInt(formData.price),
+                    image: imageUrl,
+                }),
+            });
+
+            if (response.ok) {
+                console.log("Product created successfully");
+                setFormData({
+                    productName: "",
+                    description: "",
+                    sku: "",
+                    stock: "",
+                    price: "",
+                });
+                setImagePreview(null);
+                setCategory("wash_and_fold");
+                setErrors({
+                    productName: "",
+                    description: "",
+                    sku: "",
+                    stock: "",
+                    price: "",
+                    image: "",
+                });
+            } else {
+                console.error("Failed to create product:", response.status, await response.text());
+            }
+        } catch (error) {
+            console.error("Error:", error);
         }
     };
-
     return (
         <div className="bg-blue-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-[#303030] sm:mb-15 mb-10">Add New Product</h2>
