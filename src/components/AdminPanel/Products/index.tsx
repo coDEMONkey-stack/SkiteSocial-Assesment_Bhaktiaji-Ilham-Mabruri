@@ -27,7 +27,9 @@ const AddProduct: React.FC = () => {
         if (file && file.type.startsWith("image/")) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setImagePreview(reader.result as string);
+                if (typeof reader.result === "string") {
+                    setImagePreview(reader.result);
+                }
             };
             reader.readAsDataURL(file);
             setErrors((prev) => ({ ...prev, image: "" }));
@@ -35,6 +37,7 @@ const AddProduct: React.FC = () => {
             setErrors((prev) => ({ ...prev, image: "This field is required" }));
         }
     };
+    
 
     const handleCategoryClick = (category: string) => {
         setCategory(category);
@@ -64,7 +67,6 @@ const AddProduct: React.FC = () => {
         }
     };
 
-    // Check All Product's Data on /product Endpoint
     const fetchProducts = async () => {
         try {
             const response = await fetch("https://belaundry-api.sebaris.link/platform/product", {
@@ -104,7 +106,7 @@ const AddProduct: React.FC = () => {
             const fileInput = document.getElementById("imageUpload") as HTMLInputElement;
             const file = fileInput?.files?.[0];
     
-            let imageUrl = "";
+            let imageUrl: string | null = "";
             if (file) {
                 imageUrl = await uploadImage(file);
                 if (!imageUrl) {
@@ -126,7 +128,7 @@ const AddProduct: React.FC = () => {
                     stock: parseInt(formData.stock),
                     category_id: category,
                     price: parseInt(formData.price),
-                    image: imageUrl,
+                    image: imageUrl || "",
                 }),
             });
     
