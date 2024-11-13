@@ -20,6 +20,8 @@ const AddProduct: React.FC = () => {
         image: "",
     });
 
+    const [showToast, setShowToast] = useState(false);
+
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file && file.type.startsWith("image/")) {
@@ -62,25 +64,46 @@ const AddProduct: React.FC = () => {
         }
     };
 
+    // Check All Product's Data on /product Endpoint
+    const fetchProducts = async () => {
+        try {
+            const response = await fetch("https://belaundry-api.sebaris.link/platform/product", {
+                method: "GET",
+                headers: {
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoxLCJpYXQiOjE2OTAzNTc4Mzd9.ILF698ktm1Zw_ssLXsmCAMAGEz3_LIVA3_XWXcHWK0k",
+                },
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Fetched products:", data);
+            } else {
+                console.error("Failed to fetch products:", response.status, await response.text());
+            }
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        }
+    };
+    
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         let isValid = true;
         let newErrors = { ...errors };
-
+    
         Object.keys(formData).forEach((key) => {
             if (!formData[key as keyof typeof formData]) {
                 newErrors[key as keyof typeof errors] = "This field is required";
                 isValid = false;
             }
         });
-
+    
         setErrors(newErrors);
         if (!isValid || !imagePreview) return;
-
+    
         try {
             const fileInput = document.getElementById("imageUpload") as HTMLInputElement;
             const file = fileInput?.files?.[0];
-
+    
             let imageUrl = "";
             if (file) {
                 imageUrl = await uploadImage(file);
@@ -89,7 +112,7 @@ const AddProduct: React.FC = () => {
                     return;
                 }
             }
-
+    
             const response = await fetch("https://belaundry-api.sebaris.link/platform/product", {
                 method: "POST",
                 headers: {
@@ -106,9 +129,10 @@ const AddProduct: React.FC = () => {
                     image: imageUrl,
                 }),
             });
-
+    
             if (response.ok) {
                 console.log("Product created successfully");
+                fetchProducts();
                 setFormData({
                     productName: "",
                     description: "",
@@ -126,6 +150,8 @@ const AddProduct: React.FC = () => {
                     price: "",
                     image: "",
                 });
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 5000);
             } else {
                 console.error("Failed to create product:", response.status, await response.text());
             }
@@ -133,10 +159,18 @@ const AddProduct: React.FC = () => {
             console.error("Error:", error);
         }
     };
+    
     return (
         <div className="bg-blue-100 p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-bold text-[#303030] sm:mb-15 mb-10">Add New Product</h2>
-            
+            <div className="relative">
+                {showToast && (
+                    <div className="fixed top-4 sm:bottom-4 right-4 p-4 bg-green-500 text-white rounded-lg shadow-lg z-50">
+                        Product created successfully!
+                    </div>
+                )}
+            </div>
+
             <div className="flex flex-col sm:flex-row sm:space-x-6 space-y-6 sm:space-y-0">
                 {/* Form Section */}
                 <form onSubmit={handleSubmit} className="flex-1 flex flex-col space-y-4">
