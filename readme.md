@@ -25,9 +25,13 @@ III. Deployment:
 IV. Others:
 - Sliced from Figma design references: https://www.figma.com/file/GF3khMtrgYsrxRjLVwuoWA/FE-test?type=design&node-id=0%3A1&mode=design&t=Zgq5WCFRRmKldnvv-1 
 - End-User path :
-http://localhost:3000 (Home)
-http://localhost:3000/ordersummary (Invoice)
-http://localhost:3000/productsummary (Product Detail)
+http://localhost:3000 (Home).
+
+http://localhost:3000/ordersummary (Invoice).
+
+http://localhost:3000/productsummary (Product Detail).
+
 - Admin path :
-http://localhost:3000/dashboard (Dashboard Panel)
-http://localhost:3000/dashboard/products (Add Products Panel, which is implemented through the API to create products in the ProductSummary page on the End-User path)
+http://localhost:3000/dashboard (Dashboard Panel).
+
+http://localhost:3000/dashboard/products (Add Products Panel, which is implemented through the API to create products in the ProductSummary page on the End-User path).
