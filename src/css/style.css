@@ -1,0 +1,332 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://unpkg.com/split-type@0.3.4/umd/index.min.js");
+/*  
+Library:
+1. Font Family
+    1.a. root
+    1.b. Bagoss
+    1.c. Graphik
+    1.d. PP Agrandir
+    1.e. Sohne (Body)
+2. Layer Base
+    2.a. Body
+3. Layer Components
+    3.a. Button
+*/
+
+
+/* 1. Fonts Family */
+/* 1.a. root */
+@font-face {
+    font-family: 'PrimaryFont';
+    src: var(--font-primary);
+    src: local('PrimaryFont-Normal'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.woff2') format('woff2'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.woff') format('woff'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'PrimaryFont';
+    src: var(--font-primary);
+    src: local('PrimaryFont-Bold');
+    src: url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.eot'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.woff2') format('woff2'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.woff') format('woff'),
+        url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* 1.b. Fonts Bagoss */
+@font-face {
+    font-family: 'Bagoss';
+    src: var(--font-bagoss);
+    src: local('Bagoss-Normal'),
+        url('../assets/fonts/Bagoss/BagossTRIALVF.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
+/* 1.c. Fonts Graphik */
+@font-face {
+    font-family: 'Graphik';
+    src: var(--font-graphik-medium);
+    src: url('../assets/fonts/Graphik/Graphik-Medium.eot');
+    src: local('Graphik-Medium'),
+        url('../assets/fonts/Graphik/Graphik-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/Graphik/Graphik-Medium.woff2') format('woff2'),
+        url('../assets/fonts/Graphik/Graphik-Medium.woff') format('woff'),
+        url('../assets/fonts/Graphik/Graphik-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* 1.d. Fonts PP Agrandir */
+@font-face {
+    font-family: 'Agrandir';
+    src: var(--font-agrandir-normal);
+    src: url('../assets/fonts/PPAgrandir/PPAgrandir-Regular.ttf');
+    src: local('Agrandir-Regular'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Regular.woff2') format('woff2'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Regular.woff') format('woff'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Agrandir';
+    src: var(--font-agrandir-medium);
+    src: url('../assets/fonts/PPAgrandir/PPAgrandir-Medium.ttf');
+    src: local('Agrandir-Medium'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Medium.eot?#iefix') format('embedded-opentype'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Medium.woff2') format('woff2'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Medium.woff') format('woff'),
+        url('../assets/fonts/PPAgrandir/PPAgrandir-Medium.ttf') format('truetype');
+    font-weight: medium;
+    font-style: normal; 
+    font-display: swap;
+}
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --Text-Size-XSmall: 19px;
+    --font-primary:url('../assets/fonts/177dfc527bd44fad48eb07c66fb3cc41.ttf');
+    --font-bagoss:url('../assets/fonts/Bagoss/BagossTRIALVF.ttf');
+    --font-graphik-medium:url('../assets/fonts/Graphik/Graphik-Medium.eot');
+    --font-sohne:url('../assets/fonts/SohneBody/Sohne-Buch.otf');
+    --box-main-shadow-color:rgba(255, 255, 255, 0.34);
+    --box-alt-shadow-color:rgba(255, 255, 255, 0.10);
+    --button-primary-bg-color: #CDAAFF;
+    --button-primary-hover-color:rgba(255, 255, 255, 0.60);
+    --button-primary-active-color:#FAFAFA;
+
+}
+
+@layer base {
+    body {
+        @apply relative z-1 bg-[#0C0D10] font-satoshi text-base font-normal text-body;
+        background: white;
+        background-size:cover;
+        backdrop-filter: blur(10px);
+    }
+    li {
+        list-style: none;
+    }
+    .text-gradient {
+        background: linear-gradient(90deg, #FABBFF 0%, #B179FF 35%, #6DDDFF 83%) no-repeat;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color:transparent;
+    }
+    .font-bagoss {
+        font-family: var(--font-bagoss);
+        font-style: normal;
+        font-display: swap;
+        font-size: 28px;
+        color: #FAFAFA;
+        font-weight: 400;
+        line-height: 120%;
+        letter-spacing: 0.28px;
+    }
+}
+
+@layer components {
+    .container {
+        overflow: hidden;
+        border: none;
+        max-width:max-content;
+    }
+    button.primary-button {
+        display: flex;
+        border-radius: var(--Text-Size-XSmall);
+        background: var(--button-primary-bg-color);
+        box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+        padding-top:24px;
+        padding-bottom:24px;
+        align-items: center;
+        color: #0C0D10;
+        font-family:var(--font-sohne);
+        font-weight: 400;
+        line-height: 135%;
+
+        &:hover {
+            border-radius: var(--Text-Size-XSmall) ;
+            border: 1px solid var(--box-main-shadow-color);
+            box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+            background: none;
+            color: #FAFAFA;
+        }
+
+        &:active {
+            border-radius: var(--Text-Size-XSmall);
+            border: 1px solid var(--box-alt-shadow-color);
+            background: #FAFAFA;
+            box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+            color:#0C0D10;
+        }
+        &:disabled {
+            border-radius: var(--Text-Size-XSmall) ;
+            border: 1px solid var(--box-main-shadow-color);
+            box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+            background: none;
+            color: #FAFAFA;
+        }
+    }
+    button.secondary-button {
+        display: flex;
+        border-radius: var(--Text-Size-XSmall);
+        border: 1px solid var(--box-alt-shadow-color);
+        background: #FAFAFA;
+        box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+        color:#0C0D10;
+        padding-top:24px;
+        padding-bottom:24px;
+        align-items: center;
+        font-family:var(--font-sohne);
+        font-weight: 400;
+        line-height: 135%;
+
+        &:hover {
+            border-radius: var(--Text-Size-XSmall) ;
+            border: 1px solid var(--box-main-shadow-color);
+            box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+            background: none;
+            color: #FAFAFA;
+        }
+
+        &:active {
+            border-radius: var(--Text-Size-XSmall);
+            border: 1px solid var(--box-alt-shadow-color);
+            background: var(--button-primary-bg-color);
+            box-shadow: 0px 0px 0px 0px var(--box-main-shadow-color);
+            color:#0C0D10;
+        }
+    }
+
+    .swiper-pagination .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal{
+        margin-top: 108px!important;
+    }
+    @media only screen 
+    and (min-device-width: 390px) 
+    and (max-device-width: 844px) 
+    and (-webkit-min-device-pixel-ratio: 3) {
+        .swiper-pagination .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal {
+          margin-top: 108px !important;
+      }
+  }
+
+    .swiper-pagination .swiper-pagination-bullet {
+        background-color: #fff;
+        opacity: 0.6;
+        height: 8px;
+        width: 8px;
+        margin-top: 48px!important;
+    }
+    
+    .swiper-pagination .swiper-pagination-bullet-active {
+        background-color: #B488F2;
+        opacity: 1;
+        height: 8px;
+        width: 8px;
+        margin-top: 48px!important;
+    }
+ 
+
+}
+
+@layer utilities {
+    .animated-logo {
+        display: inline-flex;
+        align-items: flex-end;
+        overflow: hidden;
+        padding-right: 15px;
+      }
+      .animated-logo svg {
+        overflow: unset;
+      }
+      .animated-logo svg path {
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        fill: var(--text-color);
+      }
+      .scroll .animated-logo svg path.animate {
+        opacity: 0;
+        transform: translate3d(-80px, 0, 0);
+      }
+      .scroll .animated-logo svg path.animate.letter-b {
+        opacity: 1;
+        transform: translate3d(-63px, 0, 0);
+      }
+
+      .bg-blur-glass {
+        background: rgba(7, 13, 30, 0.7);
+        backdrop-filter: blur(20px);
+      }
+
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    .chat-height {
+        @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+    }
+
+    .inbox-height {
+        @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+    }
+
+    .vector-container {
+        position: flex;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .text-top-left {
+        top: 5%;
+        left: 5%;
+    }
+    
+    .text-top-right {
+        top: 5%;
+        right: 5%;
+    }
+    
+    .text-center-left {
+        top: 30%;
+        left: 5%;
+    }
+    
+    .text-vector-center {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .text-bottom-left {
+        bottom: 5%;
+        left: 5%;
+    }
+    
+}
