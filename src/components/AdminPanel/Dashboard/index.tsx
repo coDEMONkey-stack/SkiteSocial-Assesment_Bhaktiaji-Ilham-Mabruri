@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
          {/* Product Sold Section */}
       <div className="bg-white p-4 rounded-lg sm:mb-12 mb-5 shadow-lg">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Product Sold</h2>
+          <h2 className="sm:text-lg text-md font-semibold">Product Sold</h2>
           <select className="border rounded p-1 text-sm">
             <option>This week</option>
             <option>Last week</option>
@@ -46,9 +46,9 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Top Selling Product Section */}
-      <div className="bg-white p-4 rounded-lg w-1/2 shadow-lg">
+      <div className="bg-white p-4 rounded-lg sm:w-1/2 w-full shadow-lg">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold">Top selling product</h2>
+          <h2 className="sm:text-lg text-md font-semibold">Top selling product</h2>
           <select className="border border-gray-300 rounded px-2 py-1 text-sm">
             <option>This week</option>
             <option>Last week</option>
