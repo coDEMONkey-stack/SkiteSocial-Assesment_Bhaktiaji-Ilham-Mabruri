@@ -13,6 +13,7 @@
     "@studio-freight/react-lenis": "^0.0.47",
     "@svgr/webpack": "^8.1.0",
     "apexcharts": "^3.54.1",
+    "axios": "^1.7.7",
     "electron": "^32.1.2",
     "flatpickr": "^4.6.13",
     "gsap": "^3.12.5",
@@ -39,6 +40,7 @@
     "swiper": "^11.1.14"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

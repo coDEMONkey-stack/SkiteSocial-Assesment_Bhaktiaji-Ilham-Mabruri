@@ -1,5 +1,6 @@
 "use client";
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
+import axios from 'axios';
 import { gsap } from "gsap-trial";
 import { SplitText } from "gsap-trial/SplitText";
 import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
@@ -17,8 +18,20 @@ import 'swiper/css/effect-coverflow';
 import "../../css/style.css";
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+    category: string;
+    title: string;
+    unit: string;
+  }
+
 const HomeLanding: React.FC = () => {
     const containerRef = useRef<HTMLDivElement>(null); 
+    const [products, setProducts] = useState<Product[]>([]);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoxLCJpYXQiOjE2OTAzNTc4Mzd9.ILF698ktm1Zw_ssLXsmCAMAGEz3_LIVA3_XWXcHWK0k";
 
     useLayoutEffect(() => {
         ScrollTrigger.refresh();
@@ -28,6 +41,30 @@ const HomeLanding: React.FC = () => {
           { scale: 1, opacity: 1, duration: 1.5, ease: "power3.out" }
         );
       }, []);
+    
+      useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const response = await axios.get('https://belaundry-api.sebaris.link/platform/product', {
+              headers: {
+                token: token
+              }
+            });
+            
+            //const sortedProducts = response.data.response.sort((a, b) => b.id - a.id); // Get newest products data. Delete this comment tag to check the newest products data.
+            const data = Array.isArray(response.data.response) ? response.data.response : []; 
+            //setProducts(sortedProducts.slice(0, 10)); // Get newest products data. Delete this comment tag to check the newest products data.
+
+            setProducts(response.data.response.slice(0, 10)); // Get oldest products data.
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+    
+        fetchProducts();
+    }, []);
+    
+    
 
   return (
     <>
@@ -117,39 +154,19 @@ const HomeLanding: React.FC = () => {
             }}
             onSwiper={(swiper) => console.log(swiper)}
         >
-        <SwiperSlide className="justify-center" style={{width: 'auto'}}>
+        {products.map((product) => (
+          <SwiperSlide key={product.id}  className="justify-center" style={{ width: "auto" }}>
             <ServiceCard
-                condition={1}
-                image="/images/products/img-product2.png"
-                className="sm:h-[420px] sm:w-[402px] h-[302px] w-[220px]"
-                category="Dry Cleaning"
-                title="Jeans"
-                price={10.0}
-                unit="pc"
+              condition={1}
+              image={product.image || "/images/products/img-product2.png"}
+              className="sm:h-[420px] sm:w-[402px] h-[302px] w-[220px]"
+              category={product.category || "Category"}
+              title={product.name || "Product Name"}
+              price={product.price || 0}
+              unit={product.unit || "pc"}
             />
-        </SwiperSlide>
-        <SwiperSlide className="justify-center" style={{width: 'auto'}}>
-            <ServiceCard
-                condition={1}
-                image="/images/products/img-product3.png"
-                className="sm:h-[420px] sm:w-[402px] h-[302px] w-[220px]"
-                category="Dry Cleaning"
-                title="T-shirt"
-                price={6.0}
-                unit="pc"
-            />
-        </SwiperSlide>
-        <SwiperSlide className="justify-center" style={{width: 'auto'}}>
-            <ServiceCard
-                condition={1}
-                image="/images/products/img-product2.png"
-                className="sm:h-[420px] sm:w-[402px] h-[302px] w-[220px]"
-                category="Dry Cleaning"
-                title="Ilham's Jeans"
-                price={8.0}
-                unit="pc"
-            />
-        </SwiperSlide>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
